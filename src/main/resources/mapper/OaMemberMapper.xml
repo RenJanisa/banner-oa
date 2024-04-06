@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banneroa.mapper.OaMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.banneroa.pojo.OaMember">
+        <id column="id" property="id"/>
+        <result column="bname" property="bname"/>
+        <result column="class_name" property="className"/>
+        <result column="direction" property="direction"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+
+    <select id="getMemberList" resultType="com.banneroa.dto.MemberListDto">
+        SELECT om.id,
+               om.bname,
+               om.class_name,
+               om.direction,
+               (SELECT COUNT(id)
+                FROM oa_leave ol
+                WHERE ol.member_id = om.id) leave_count
+        FROM oa_member om
+        WHERE om.flag = 0
+        order by leave_count desc
+    </select>
+
+    <select id="getMemberListWithDirection" resultType="com.banneroa.dto.MemberListDto">
+        SELECT om.id,
+               om.bname,
+               om.class_name,
+               om.direction,
+               (SELECT COUNT(id)
+                FROM oa_leave ol
+                WHERE ol.member_id = om.id) leave_count
+        FROM oa_member om
+        WHERE om.flag = 0
+          AND om.direction = #{direction}
+    </select>
+
+    <select id="getMemberById" resultType="com.banneroa.dto.MemberListDto">
+        SELECT om.bname,
+               om.class_name,
+               om.direction,
+               (SELECT COUNT(id)
+                FROM oa_leave ol
+                WHERE ol.member_id = om.id) leave_count
+        FROM oa_member om
+        WHERE om.id = #{id}
+          and om.flag = 0
+    </select>
+
+</mapper>

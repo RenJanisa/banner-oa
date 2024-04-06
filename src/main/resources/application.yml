@@ -1,0 +1,50 @@
+server:
+  port: 8084
+spring:
+  mail:
+    host: smtp.qq.com
+    username: 202491296@qq.com
+    password: ubkcazrwgcyacadh
+    port: 587
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://62.234.175.173:3306/banner-oa?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: BannerStudio1.2.3
+  redis:
+    host: 62.234.175.173
+    port: 6379
+    password: banner123
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        time-between-eviction-runs: 10s
+    database: 0
+mybatis-plus:
+  configuration:
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      #雪花算法生成id
+      id-type: ASSIGN_ID
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.banneroa
+
+minio:
+  endpoint: http://bannerstudio.com.cn:9000
+  accessKey: h4bSz5olfyv5muaRauiD
+  secretKey: VMPI9TkREptuKhl1P6y58H8X05F5atlV2lOoklbt
+  bucket:
+    files: banneroa
+logging:
+  pattern:
+    dateformat: MM-dd HH:mm
